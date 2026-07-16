@@ -1,71 +1,87 @@
-import {
-    Card,
-    CardContent,
-    Typography,
-    Grid
-} from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 
 function KPICards({ dashboard }) {
+  if (!dashboard) return <h2>Loading Dashboard...</h2>;
 
-    if (!dashboard) return <h2>Loading Dashboard...</h2>;
+  const cards = [
+    {
+      title: "Total Bookings",
+      value: dashboard.totalBookings,
+      color: "#1976d2"
+    },
+    {
+      title: "Total Revenue",
+      value: `$${dashboard.totalRevenue?.toLocaleString()}`,
+      color: "#2e7d32"
+    },
+    {
+      title: "Cancelled",
+      value: dashboard.cancelled,
+      color: "#d32f2f"
+    },
+    {
+      title: "Confirmed",
+      value: dashboard.confirmed,
+      color: "#ed6c02"
+    }
+  ];
 
-    const cards = [
-        {
-            title: "Total Bookings",
-            value: dashboard.totalBookings
-        },
-        {
-            title: "Total Revenue",
-            value: `$${dashboard.totalRevenue?.toLocaleString()}`
-        },
-        {
-            title: "Cancelled",
-            value: dashboard.cancelled
-        },
-        {
-            title: "Confirmed",
-            value: dashboard.confirmed
-        }
-    ];
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        flexWrap: "wrap",
+        gap: 3,
+        width: "100%",
+        boxSizing: "border-box"
+      }}
+    >
+      {cards.map((card, index) => (
+        <Card
+          key={index}
+          elevation={4}
+          sx={{
+            height: 140,
+            flex: { xs: "1 1 100%", sm: "1 1 calc(50% - 24px)", md: "1 1 calc(25% - 24px)" },
+            borderRadius: 3,
+            transition: "0.3s",
+            display: "flex",
+            alignItems: "center",
+            boxSizing: "border-box",
+            "&:hover": {
+              transform: "translateY(-5px)",
+              boxShadow: 8,
+            },
+          }}
+        >
+          <CardContent sx={{ width: "100%" }}>
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              sx={{ mb: 1, fontWeight: 700 }}
+            >
+              {card.title}
+            </Typography>
 
-    return (
+            <Box
+              sx={{
+                width: 50,
+                height: 4,
+                bgcolor: card.color,
+                borderRadius: 5,
+                mb: 1.5,
+              }}
+            />
 
-        <Grid container spacing={3}>
-
-            {cards.map((card, index) => (
-
-                <Grid item xs={12} sm={6} md={3} key={index}>
-
-                    <Card elevation={4}>
-
-                        <CardContent>
-
-                            <Typography
-                                color="text.secondary"
-                                gutterBottom
-                            >
-                                {card.title}
-                            </Typography>
-
-                            <Typography
-                                variant="h4"
-                                fontWeight="bold"
-                            >
-                                {card.value}
-                            </Typography>
-
-                        </CardContent>
-
-                    </Card>
-
-                </Grid>
-
-            ))}
-
-        </Grid>
-
-    );
-
+            <Typography variant="h4" fontWeight="bold">
+              {card.value}
+            </Typography>
+          </CardContent>
+        </Card>
+      ))}
+    </Box>
+  );
 }
 
 export default KPICards;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Alert, TextField  } from "@mui/material";
+import { Box, Button, Alert, TextField, Grid } from "@mui/material";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { getDashboard, getRevenueCountry, getMonthlyRevenue, getDashboardAgentBookings } from "../services/bookingService";
 import { summaryReport } from "../services/emailService";
@@ -23,15 +23,11 @@ function Dashboard() {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-
         loadDashboard();
-
     }, []);
 
     const loadDashboard = async () => {
-
         try {
-
             const response = await getDashboard();
             const countryRes = await getRevenueCountry();
             const revenueRes = await getMonthlyRevenue();
@@ -43,96 +39,110 @@ function Dashboard() {
             setCountryData(countryRes.data);
             setMonthlyRevenueData(revenueRes.data);
             setAgentData(agentRes.data);
-
         } catch (error) {
-
             console.error(error);
-
         }
-
     };
 
     const handleSummaryReport = async () => {
-
         if (!email.trim()) {
             setReportError("Please enter an email address.");
             return;
         }
 
         try {
-
             setSending(true);
             setReportError("");
             setReportMessage("");
 
             const response = await summaryReport(email);
-
             setReportMessage(response.data);
-
         } catch (error) {
-
             setReportError(
                 error.response?.data || "Failed to generate report."
             );
-
         } finally {
-
             setSending(false);
-
         }
-
     };
 
     return (
+    <Box sx={{ width: "100%", minWidth: 0, display: "block" }}>
+        <h2>Dashboard</h2>
 
-        <div>
+        <KPICards dashboard={dashboard} />
 
-            <h2>Dashboard</h2>
+        <Box 
+            sx={{ 
+                display: "flex", 
+                flexDirection: { xs: "column", md: "row" }, 
+                gap: 3, 
+                mt: 3,
+                width: "100%"
+            }}
+        >
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <RevenueCountryChart data={countryData} />
+            </Box>
+            
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <BookingStatusChart summary={dashboard} />
+            </Box>
+        </Box>
 
-            <KPICards dashboard={dashboard} />
+        <Box sx={{ 
+            display: "flex", 
+            flexDirection: { xs: "column", md: "row" }, 
+            gap: 3, mt: 3, 
+            width: "100%" 
+            }}
+            >
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <MonthlyRevenueChart data={monthlyRevenueData} />
+            </Box>
+            
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <TopAgentsChart data={agentData} />
+            </Box>
+        </Box>
 
-            <RevenueCountryChart data={countryData} />
-
-            <BookingStatusChart summary={dashboard} />
-
-            <MonthlyRevenueChart data={monthlyRevenueData} />
-
-            <TopAgentsChart data={agentData} />
-
-            <TextField
-                fullWidth
-                label="Recipient Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                sx={{ mb: 2 }}
+        <Box 
+            sx={{ 
+                mt: 5, 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                gap: 2,
+                maxWidth: "700px",
+                mx: "auto" 
+            }}
+        >
+            <TextField 
+                fullWidth 
+                label="Recipient Email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
             />
-
-            <Box
-                sx={{
-                    mt: 5,
-                    display: "flex",
-                    justifyContent: "center"
+  
+            <Button 
+                variant="contained" 
+                color="success" 
+                size="large" 
+                startIcon={<PictureAsPdfIcon />} 
+                onClick={handleSummaryReport} 
+                disabled={sending}
+                sx={{ 
+                    height: "56px",
+                    minWidth: "340px",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0
                 }}
             >
-
-                <Button
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    startIcon={<PictureAsPdfIcon />}
-                    onClick={handleSummaryReport}
-                    disabled={sending}
-                >
-
-                    {sending ? "Generating..." : "Generate Summary Report"}
-
-                </Button>
-
-            </Box>
-
-        </div>
-
-    );
+                {sending ? "Generating..." : "Generate Summary Report"}
+            </Button>
+        </Box>
+    </Box>
+);
 
 }
 

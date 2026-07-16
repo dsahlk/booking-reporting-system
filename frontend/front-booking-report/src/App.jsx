@@ -8,15 +8,11 @@ import Dashboard from "./pages/Dashboard";
 import UploadPage from "./pages/UploadPage";
 
 function App() {
-
     return (
-
-        <>
-
+        <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <Navbar />
 
-            <Box sx={{ display: "flex" }}>
-
+            <Box sx={{ display: "flex", flexGrow: 1, width: "100%" }}>
                 <Sidebar />
 
                 <Box
@@ -24,30 +20,20 @@ function App() {
                     sx={{
                         flexGrow: 1,
                         p: 3,
-                        marginLeft: "220px",
-                        marginTop: "20px"
+                        marginTop: "84px", 
+                        width: "100%",      
+                        minWidth: 0,        
+                        overflowX: "hidden"
                     }}
                 >
-
                     <Routes>
-
                         <Route path="/" element={<Dashboard />} />
-
-                        <Route
-                            path="/upload"
-                            element={<UploadPage />}
-                        />
-
+                        <Route path="/upload" element={<UploadPage />} />
                     </Routes>
-
                 </Box>
-
             </Box>
-
-        </>
-
+        </Box>
     );
-
 }
 
 export default App;

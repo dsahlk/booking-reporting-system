@@ -14,53 +14,24 @@ function TopAgentsChart({ data }) {
     if (!data) return <h2>Loading Dashboard...</h2>;
 
     return (
-
-        <Card sx={{ mt: 4 }}>
-
+        <Card>
             <CardContent>
-
-                <Typography variant="h6">
-
+                <Typography variant="h6" gutterBottom>
                     Top Booking Agents
-
                 </Typography>
 
-                <ResponsiveContainer
-                    width="100%"
-                    height={350}
-                >
-
-                    <BarChart
-                        data={data}
-                        layout="vertical"
-                    >
-
+                <ResponsiveContainer width="100%" height={350}>
+                    <BarChart data={data} layout="vertical">
                         <CartesianGrid strokeDasharray="3 3" />
-
                         <XAxis type="number" />
-
-                        <YAxis
-                            type="category"
-                            dataKey="agent"
-                        />
-
+                        <YAxis type="category" dataKey="agent" />
                         <Tooltip />
-
-                        <Bar
-                            dataKey="bookings"
-                            fill="#4CAF50"
-                        />
-
+                        <Bar dataKey="bookings" fill="#4CAF50" />
                     </BarChart>
-
                 </ResponsiveContainer>
-
             </CardContent>
-
         </Card>
-
     );
-
 }
 
 export default TopAgentsChart;
