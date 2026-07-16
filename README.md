@@ -245,3 +245,252 @@ Example
 **Sahan Dilshan**
 
 Spring Boot • Spring Security • JPA • MySQL • JWT • REST API
+
+# Booking Analytics Dashboard - Frontend
+
+A modern React-based frontend for the **Booking Analytics Dashboard**. This application provides an interactive dashboard for visualizing booking analytics, uploading CSV booking data, and generating summary reports.
+
+---
+
+## Technologies Used
+
+- React 19
+- Vite
+- Material UI (MUI)
+- React Router DOM
+- Axios
+- Recharts
+- JavaScript (ES6)
+
+---
+
+## Features
+
+### Dashboard
+
+- View booking summary statistics
+- Total Bookings
+- Confirmed Bookings
+- Cancelled Bookings
+- Total Revenue
+
+### Analytics Charts
+
+- Revenue by Country (Bar Chart)
+- Booking Status (Pie Chart)
+- Monthly Revenue (Line Chart)
+- Top 5 Booking Agents (Horizontal Bar Chart)
+
+### CSV Upload
+
+- Upload booking CSV files
+- File validation
+- Upload progress indicator
+- Upload summary
+- Display validation errors returned from backend
+
+### Summary Report
+
+- Generate booking summary report
+- Send report to a specified email address
+
+---
+
+## Project Structure
+
+```
+src
+│
+├── api
+│   └── axios.js
+│
+├── components
+│   ├── BookingStatusChart.jsx
+│   ├── KPICards.jsx
+│   ├── MonthlyRevenueChart.jsx
+│   ├── Navbar.jsx
+│   ├── RevenueCountryChart.jsx
+│   ├── Sidebar.jsx
+│   └── TopAgentsChart.jsx
+│
+├── pages
+│   ├── Dashboard.jsx
+│   └── UploadPage.jsx
+│
+├── services
+│   ├── bookingService.js
+│   └── emailService.js
+│
+├── App.jsx
+├── main.jsx
+└── index.css
+```
+
+---
+
+## Installation
+
+Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+Navigate to frontend
+
+```bash
+cd frontend
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+## Run the Application
+
+```bash
+npm run dev
+```
+
+Application will start on
+
+```
+http://localhost:5173
+```
+
+---
+
+## Required Backend
+
+The frontend requires the Spring Boot backend to be running.
+
+Default Backend URL
+
+```
+http://localhost:8081
+```
+
+Axios Base URL
+
+```javascript
+http://localhost:8081/api
+```
+
+---
+
+## API Endpoints Used
+
+### Dashboard
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | /api/dashboard/summary | Dashboard Summary |
+| GET | /api/dashboard/revenue-country | Revenue by Country |
+| GET | /api/dashboard/monthly-revenue | Monthly Revenue |
+| GET | /api/dashboard/agent-bookings | Top Booking Agents |
+
+### Booking Upload
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /api/bookings/upload | Upload Booking CSV |
+
+### Email Report
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | /api/email/report | Generate and Email Summary Report |
+
+---
+
+## Dashboard Components
+
+### KPI Cards
+
+Displays
+
+- Total Bookings
+- Confirmed Bookings
+- Cancelled Bookings
+- Total Revenue
+
+---
+
+### Revenue by Country
+
+Visualized using
+
+- Recharts BarChart
+
+---
+
+### Booking Status
+
+Visualized using
+
+- Recharts PieChart
+
+---
+
+### Monthly Revenue
+
+Visualized using
+
+- Recharts LineChart
+
+---
+
+### Top Booking Agents
+
+Visualized using
+
+- Recharts Horizontal BarChart
+
+---
+
+## CSV Upload Workflow
+
+1. Select CSV file
+2. Validate file type
+3. Upload to backend
+4. Display upload summary
+5. Show validation errors (if any)
+
+---
+
+## Email Report Workflow
+
+1. Enter recipient email address
+2. Click **Generate Summary Report**
+3. Backend generates report
+4. Report is emailed to recipient
+5. Success or error message displayed
+
+
+---
+
+## Future Improvements
+
+- Authentication and Authorization
+- Dark Mode
+- Download PDF Reports
+- Export Dashboard as PDF
+- Dashboard Filters
+- Pagination
+- Search Functionality
+- Responsive Mobile Layout
+- Real-time Dashboard Updates
+
+---
+
+## Author
+
+**Sahan Dilshan**
+
+Booking Analytics Dashboard Frontend
+
+Built with React, Material UI, Axios, and Recharts.
